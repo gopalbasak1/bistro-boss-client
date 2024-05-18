@@ -1,0 +1,11 @@
+.featured-item{
+    background-image: url('../../assets/others/authentication.png');
+    background-size: cover;
+}
+
+/* .login{
+    background-image: url('../../assets/others/authentication1.png');
+    background-size: contain;
+    width: 648px;
+    height: 455px;
+} */
