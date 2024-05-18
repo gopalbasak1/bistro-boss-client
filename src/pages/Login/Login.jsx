@@ -1,7 +1,18 @@
 import './Login.css'
 import loginImg from '../../assets/others/authentication2.png'
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha} from 'react-simple-captcha';
+import { useEffect, useRef, useState } from 'react';
+
+
 
 const Login = () => {
+
+    const captchaRef = useRef(null);
+    const [disabled, setDisabled] = useState(true);
+
+    useEffect(()=>{
+        loadCaptchaEnginge(6);
+    },[]);
 
     const handleLogin = event =>{
 
@@ -10,6 +21,17 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password);
+    }
+
+    const handleValidateCaptcha = () =>{
+        const user_captcha_value = captchaRef.current.value;
+        
+        if(validateCaptcha(user_captcha_value)){
+            setDisabled(false)
+        }
+        else{
+            setDisabled(true);
+        }
     }
 
 
@@ -36,6 +58,7 @@ const Login = () => {
                 name='email'
                 placeholder="email" className="input input-bordered" required />
               </div>
+
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Password</span>
@@ -44,8 +67,21 @@ const Login = () => {
                 name='password'
                 placeholder="password" className="input input-bordered" required />
               </div>
+
+              <div className="form-control">
+                <label className="label">
+                <LoadCanvasTemplate />
+                </label>
+                <input type="text"
+                ref={captchaRef}
+                name='captcha'
+                placeholder="Type the text above captcha" className="input input-bordered" required />
+                <button onClick={handleValidateCaptcha} className='btn btn-outline btn-xs mt-2'>Validate</button>
+              </div>
+
+
               <div className="form-control mt-6">
-                <button className="btn bg-[#b48641b3] hover:bg-[#d8c29e] text-xl font-bold text-white">Login</button>
+                <button disabled={disabled}  className="btn bg-[#b48641b3] hover:bg-[#d8c29e] text-xl font-bold text-white">Login</button>
               </div>
             </form>
           </div>
