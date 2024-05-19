@@ -10,7 +10,7 @@ const PopularMenu = () => {
 
 
     return (
-        <div className="mb-12">
+        <div className="mb-12 container mx-auto">
             <SectionTitle
             subHeading="Check it out"
             heading="FROM OUR MENU"

@@ -10,7 +10,7 @@ import Testimonials from "../Testimonials/Testimonials";
 
 const Home = () => {
     return (
-        <div>
+        <div className="w-full mx-auto">
             <Helmet>
                 <title>Bistro Boss | Home </title>
             </Helmet>
