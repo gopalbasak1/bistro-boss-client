@@ -10,8 +10,12 @@ import Login from "../pages/Login/Login";
 import SignUp from "../pages/SignUp/SignUp";
 import Secret from "../pages/Shared/Secret/Secret";
 import PrivateRotes from "./PrivateRotes";
+import Dashboard from "../Layouts/Dashboard/Dashboard";
+import Cart from "../pages/Dashboard/Cart/Cart";
 
 const Routes = createBrowserRouter([
+
+    //side bar
     {
         path: '/',
         element: <Root/>,
@@ -41,6 +45,18 @@ const Routes = createBrowserRouter([
                 element: <PrivateRotes>
                     <Secret/>
                 </PrivateRotes>
+            }
+        ]
+    },
+
+    //Dashboard Content
+    {
+        path: 'dashboard',
+        element: <Dashboard/>,
+        children: [
+            {
+                path: 'cart',
+                element: <Cart/>
             }
         ]
     }

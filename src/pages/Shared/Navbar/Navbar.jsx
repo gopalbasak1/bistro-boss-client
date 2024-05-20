@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
+import { GiShoppingCart } from "react-icons/gi";
+import useCart from "../../../hooks/useCart";
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
+    const [cart] = useCart()
 
     const handleLogOut = () => {
         logOut()
@@ -24,6 +27,16 @@ const Navbar = () => {
             <li>
                 <Link to="/secret">Secret</Link>
             </li>
+
+            <li className="">
+                <Link to="/dashboard/cart">
+                <button className="flex items-center gap-2 mr-4">
+                <GiShoppingCart className="text-xl" />
+                <div className="badge badge-secondary">+{cart.length}</div>
+                </button>
+                </Link>
+            </li>
+
         </>
     );
 
