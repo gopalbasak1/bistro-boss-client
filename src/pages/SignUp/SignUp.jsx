@@ -4,10 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { FcGoogle } from "react-icons/fc";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 
 const SignUp = () => {
-
+  const axiosPublic = useAxiosPublic();
     const {createUser, updateUserProfile} = useAuth();
     const navigate = useNavigate();
 
@@ -19,14 +22,23 @@ const SignUp = () => {
       } = useForm();
 
       const onSubmit= (data) =>{
-        console.log(data);
+
         createUser(data.email, data.password)
         .then(result =>{
             const loggedUser = result.user;
             console.log(loggedUser);
             updateUserProfile(data.name, data.photoURL)
             .then(()=>{
-              console.log('user profile info update');
+              // create user entry in the database
+              const userInfo = {
+                name: data.name,
+                email: data.email,
+                password: data.password
+              }
+              axiosPublic.post('/users',userInfo)
+              .then(res=>{
+                if(res.data.insertedId){
+               console.log('user added to the database');
               reset();
               Swal.fire({
                 position: "top-end",
@@ -36,6 +48,11 @@ const SignUp = () => {
                 timer: 1500
               });
               navigate('/')
+
+                }
+              })
+
+              
             })
             .catch(error => console.log(error))
         })
@@ -144,6 +161,9 @@ const SignUp = () => {
                 <Link className='text-xl font-bold' to='/login'>
                 Go to log in
                 </Link>
+            </div>
+            <div className="w-full mx-auto">
+                    <SocialLogin/>
             </div>
           </div>
         </div>
